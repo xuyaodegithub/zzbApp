@@ -161,9 +161,12 @@ export default {
 <style lang="stylus" scoped>
   section
     height 100%
+    display flex
+    flex-direction column
   .login-box
-    padding 55px 38px 0
-    height 100vh
+    padding 5px 38px 0
+    /*height 100vh*/
+    flex 1
     background #fff
     box-sizing border-box
 

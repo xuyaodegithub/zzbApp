@@ -10,7 +10,7 @@
         <slot name="textright"></slot>
       </div>
     </header>
-    <div class="relave">   &nbsp</div>
+    <div class="relave">&nbsp&nbsp&nbsp</div>
   </div>
 </template>
 
