@@ -40,6 +40,9 @@ export default {
     return {
       RESULTSUCCESS,
       banklist: [
+        { bankName: '杭州银行', cardNo: 123456789101111111, logo:'' },
+        { bankName: '杭州银行', cardNo: 123456789101111111, logo:'' },
+        { bankName: '杭州银行', cardNo: 123456789101111111, logo:'' },
       ]
     };
   },
@@ -61,7 +64,7 @@ export default {
     }
   },
   mounted () {
-    this.fetchBankList();
+    // this.fetchBankList();
   }
 };
 </script>

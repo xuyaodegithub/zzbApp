@@ -1,5 +1,18 @@
 import http from 'config/request';
 
+// 判断手机终端安卓orIOS
+export const isIOS = () => {
+  let u = navigator.userAgent;
+  // let app = navigator.appVersion;
+  let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; // g
+  let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); // ios终端
+  if (isAndroid) {
+    return false;
+  }
+  if (isIOS) {
+    return true;
+  }
+};
 /**
  * 发送验证码
  * @param:{string} phoneNum 手机号

@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="Top">
     <myHeader :hasBack="false" title="周转宝">
       <router-link
        slot="textright"
@@ -164,7 +164,7 @@ export default {
 <style lang="stylus" scoped>
 $red = #f13c38
 $gray = #a5a3a3
-  section
+  section.Top
     min-height 100%
 
 .home-loan-top

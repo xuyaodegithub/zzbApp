@@ -164,9 +164,12 @@ export default {
     display flex
     flex-direction column
   .login-box
+    display flex
+    flex-direction column
     padding 5px 38px 0
-    /*height 100vh*/
     flex 1
+    /*padding 55px 38px 0*/
+    /*height 100vh*/
     background #fff
     box-sizing border-box
 
