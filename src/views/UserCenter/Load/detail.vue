@@ -177,6 +177,12 @@ export default {
       show: true,
       orderstatusMatch,
       orderInfo: {
+        // orderStatus:"1",
+        // paybackAmount:1000,
+        // overdueDay:10,
+        // repayDate:'2019-05-20',
+        // deadline:1
+
       },
       showDelayVisi: false,
       verifyCode: '',

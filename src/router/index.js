@@ -87,6 +87,11 @@ const myRouter = new Router({
       path: '/seting',
       component: () => import(/* webpackChunkName: "Seting" */'@/views/Seting/index'),
       name: 'Seting'
+    },
+    {
+      path: '/updataCard',
+      component: () => import(/* webpackChunkName: "Seting" */'@/views/UserCenter/updataCard/detail'),
+      name: 'Seting'
     }
   ]
 });
