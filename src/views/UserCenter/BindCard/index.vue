@@ -8,7 +8,7 @@
       </div>
       <template v-else>
         <div class="bank-card-box aurora-content-area" v-for="(bankItem, bankIndex) in banklist" :key="bankIndex">
-          <div class="bank-item">
+          <div class="bank-item" :style="style" @click="modifyItem(bankItem)">
             <div class="bank-info">
               <img class="bank-img" :src="bankItem.logo" alt="" @error="catchErrorImage($event)">
 <!--              <div class="bank-text">-->
@@ -18,12 +18,12 @@
             </div>
             <div class="bank-num">
 <!--              {{bankItem.cardNo | bankFilter}}-->
-                  {{bankItem.bankName}}（尾号 {{bankItem.cardNo | bankFilter}}）
+                  {{bankItem.bankName}} (尾号 {{bankItem.cardNo | lastfource}})
             </div>
           </div>
         </div>
       </template>
-      <div class="addBtn">
+      <div class="addBtn" v-if="!(banklist && banklist.length)">
         <div class="btnSon" @click="bindNewCard()">+银行卡</div>
       </div>
     </div>
@@ -35,6 +35,7 @@ import { myHeader } from 'components/index';
 import { RESULTSUCCESS } from 'utils/match';
 import { getBankList } from 'apis/index';
 import { Toast } from 'vant';
+import back from 'img/back.png';
 export default {
   components: {
     myHeader,
@@ -42,16 +43,20 @@ export default {
   },
   data () {
     return {
+      style: {
+        'backgroundImage': `url(${back})`
+      },
       RESULTSUCCESS,
       banklist: [
-        { bankName: '杭州银行', cardNo: '123456789101111156', logo:'' },
-        { bankName: '杭州银行', cardNo: '123456789101111164', logo:'' },
+        { bankName: '中国工商银行', cardNo: '123456789101111156', logo: '' },
+        { bankName: '杭州银行', cardNo: '123456789101111164', logo: '' }
       ]
+
     };
   },
   methods: {
     catchErrorImage (e) {
-      e.target.src = require('img/logo.png');
+      e.target.src = require('img/bank.jpg');
     },
     // 获取银行卡列表
     async fetchBankList () {
@@ -67,6 +72,9 @@ export default {
     },
     bindNewCard () {
       this.$router.push('/bindcard');
+    },
+    modifyItem (item) {
+      this.$router.push(`/updataCard`);
     }
   },
   mounted () {
@@ -91,9 +99,14 @@ export default {
 .bank-item
   background #ffffff
   border-radius 7px
-  box-shadow 0 5px 0 #e6e6e6
+  /*box-shadow 5px -5px 0 #e6e6e6*/
+  /*background-image url("img/back.png")*/
+  background-repeat no-repeat
+  background-size cover
+  background-position center
   /*padding-bottom 20px*/
-  padding 30px
+  padding 25px
+  border: 1px solid #E7E6DF
   .bank-info
     display flex
     justify-content flex-start
@@ -101,8 +114,8 @@ export default {
     /*padding 12px 20px*/
   .bank-img
     display block
-    width 45px
-    height 45px
+    width 60px
+    height 60px
     border-radius 50%
     /*margin-right 12px*/
     margin 0 auto
@@ -116,11 +129,11 @@ export default {
       font-size 12px
       line-height 20px
   .bank-num
-    padding 20px 0
+    padding 30px 0 10px 0
     text-align center
-    color #333333
+    color #fff
     font-size 16px
-    background #fff
+    /*background #fff*/
 .addBtn
     position fixed
     left 0

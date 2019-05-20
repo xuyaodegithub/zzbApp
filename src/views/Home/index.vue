@@ -114,36 +114,36 @@ export default {
       this.checkList = _arr;
     },
     applyLoan () {
-      // this.$router.push('/updataCard')
-      let canApply = [0, 4].includes(this.loanOrderStatus);
-      let waitExam = [1, 2].includes(this.loanOrderStatus);
-      if (canApply) {
-        setStore('productId', this.currentProduct.productId);
-        if (this.authStatus !== '0') {
-          this.$router.push({name: 'PersonalInfo'});
-        } else {
-          this.$router.push({name: 'ID', query: {productId: this.currentProduct.productId}});
-        }
-        return;
-      }
-      if (waitExam) {
-        Dialog.alert({
-          message: '您已申请借款,请耐心等待!'
-        }).then(() => {
-          this.$router.push({name: 'LoadRecord'});
-        });
-        return;
-      }
-      if (this.loanOrderStatus === 3) {
-        Dialog.confirm({
-          message: '您还有未还款的订单，请先还款之后，再次申请借款。',
-          confirmButtonText: '去还款',
-          cancelButtonText: '我知道了'
-        }).then(() => {
-          this.$router.push({name: 'LoadRecord'});
-        }).catch(() => {
-        });
-      }
+      this.$router.push('/userloaddetail/3');
+      // let canApply = [0, 4].includes(this.loanOrderStatus);
+      // let waitExam = [1, 2].includes(this.loanOrderStatus);
+      // if (canApply) {
+      //   setStore('productId', this.currentProduct.productId);
+      //   if (this.authStatus !== '0') {
+      //     this.$router.push({name: 'PersonalInfo'});
+      //   } else {
+      //     this.$router.push({name: 'ID', query: {productId: this.currentProduct.productId}});
+      //   }
+      //   return;
+      // }
+      // if (waitExam) {
+      //   Dialog.alert({
+      //     message: '您已申请借款,请耐心等待!'
+      //   }).then(() => {
+      //     this.$router.push({name: 'LoadRecord'});
+      //   });
+      //   return;
+      // }
+      // if (this.loanOrderStatus === 3) {
+      //   Dialog.confirm({
+      //     message: '您还有未还款的订单，请先还款之后，再次申请借款。',
+      //     confirmButtonText: '去还款',
+      //     cancelButtonText: '我知道了'
+      //   }).then(() => {
+      //     this.$router.push({name: 'LoadRecord'});
+      //   }).catch(() => {
+      //   });
+      // }
     },
     handleCheck (item, index) {
       if (!item.available) return;

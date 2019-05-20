@@ -116,31 +116,33 @@
       </div>
     </van-popup>
     <!-- 立即还款 -->
+    <!-- 立即还款 -->
     <van-popup
-     v-model="showDelayVisi"
-     class="dialog-delay-box">
-     <header class="dialog-header">
-       <span class="dialog-left-close">x</span>
-       <span class="dialog-head">支付延期手续费</span>
-     </header>
+      :close-on-click-overlay="false"
+      v-model="showDelayVisi"
+      class="dialog-delay-box">
+      <header class="dialog-header">
+        <van-icon name="cross"  class="dialog-left-close" @click="showDelayVisi=false"/>
+        <span class="dialog-head">支付延期手续费</span>
+      </header>
       <div class="aurora-dialog-content">
         <p class="obvious-text">333.00</p>
+        <p class="yan-Qi">延期至：2019年10月10号</p>
         <p class="text mar-bottom15">
           延期还款需先支付延期手续费，需要短信确认，验证码已发送至您手机{{phoneNum | mobileFilter}}
-          {{`${countdown}`}}s
         </p>
         <van-password-input
           :value="verifyCode"
-          :mask="false"
+          :mask="true"
           @focus="showKeyboard = true"
         />
         <button class="aurora-btn-box aurora-btn-gray"
-          :class="{'aurora-btn-active': verifyCode.length === 6}"
-          @click="handleDelaySure">
-          确认
+                :class="{'aurora-btn-active': verifyCode.length === 6 && countdown<=0}"
+                @click="handleDelaySure(0)" :disabled="verifyCode.length<6 || countdown>0">
+          {{countdown > 0 ? `${countdown}秒` : '确定'}}
         </button>
       </div>
-     </van-popup>
+    </van-popup>
 
     <!-- 数字键盘 -->
     <van-number-keyboard
@@ -148,16 +150,30 @@
       :show="showKeyboard"
       @input="onInput"
       @delete="onDelete"
+      :zIndex="9999"
       close-button-text="完成"
       @blur="showKeyboard = false"
     />
+
+    <van-popup
+      v-model="showSuccess"
+      class="successP"
+      :close-on-click-overlay="false"
+    >
+      <div class="successT">
+        <van-icon :name="icon" size="46px" color="#07c160"/>
+        <p class="s-p">延期手续费支付{{sucOPrfail ? '成功' : '失败'}}</p>
+        <p class="s-p-t">{{msgMess}}</p>
+        <van-button type="primary" size="small" block class="btn" @click="showSuccess=false">确定</van-button>
+      </div>
+    </van-popup >
   </section>
 </template>
 
 <script>
 import { myHeader } from 'components/index';
 import { orderstatusMatch } from 'utils/match';
-import { Row, Col, PasswordInput, NumberKeyboard, Popup, Dialog, Toast } from 'vant';
+import { Row, Col, PasswordInput, NumberKeyboard, Popup, Dialog, Toast, Icon, Button } from 'vant';
 import { getOrderInfo, loanPostpone } from 'apis/index';
 import { getStore } from 'utils/storage.js';
 export default {
@@ -169,11 +185,33 @@ export default {
     [NumberKeyboard.name]: NumberKeyboard,
     [Popup.name]: Popup,
     [Dialog.name]: Dialog,
-    [Toast.name]: Toast
+    [Toast.name]: Toast,
+    [Icon.name]: Icon,
+    [Button.name]: Button
   },
   data () {
     return {
+      // failVisi: false,
+      // show: true,
+      // orderstatusMatch,
+      // orderInfo: {
+      //   // orderStatus:"1",
+      //   // paybackAmount:1000,
+      //   // overdueDay:10,
+      //   // repayDate:'2019-05-20',
+      //   // deadline:1
+      //
+      // },
+      // showDelayVisi: false,
+      // verifyCode: '',
+      // showKeyboard: false,
+      // examineVisi: true,
+      // countdown: 60
       failVisi: false,
+      showSuccess: false,
+      icon: 'passed',
+      sucOPrfail: true,
+      msgMess: '延期至：2019年10月10号 ，请于延期时间按时还款，以免影响征信。谢谢！',
       show: true,
       orderstatusMatch,
       orderInfo: {
@@ -184,11 +222,11 @@ export default {
         // deadline:1
 
       },
-      showDelayVisi: false,
+      showDelayVisi: true,
       verifyCode: '',
       showKeyboard: false,
       examineVisi: true,
-      countdown: 60
+      countdown: 0
     };
   },
   computed: {
@@ -255,31 +293,45 @@ export default {
       }
     },
     onInput (value) {
-      this.mesCode = (this.mesCode + value).slice(0, 6);
+      this.verifyCode = (this.verifyCode + value).slice(0, 6);
     },
     onDelete () {
-      this.mesCode = this.mesCode.slice(0, this.mesCode.length - 1);
+      this.verifyCode = this.verifyCode.slice(0, this.verifyCode.length - 1);
     },
     handleDelaySure (bool) {
+      let _self = this;
+      this.countdown = 60;
+      let timer = setInterval(() => {
+        if (_self.countdown > 0) _self.countdown -= 1;
+        else clearInterval(timer);
+      }, 1000);
       if (bool) {
-        Dialog.alert({
-          title: '延期手续费支付成功',
-          message: `延期至：2019年10月10号 ，请于延期时间按时还款，以免影响征信。谢谢`
-        }).then(() => {
-          this.showDelayVisi = false;
-        });
+        // Dialog.alert({
+        //   title: '延期手续费支付成功',
+        //   message: `延期至：2019年10月10号 ，请于延期时间按时还款，以免影响征信。谢谢`
+        // }).then(() => {
+        // this.showDelayVisi = false;
+        this.showSuccess = true;
+        this.sucOPrfail = true;
+        this.icon = 'passed';
+        this.msgMess = '延期至：2019年10月10号 ，请于延期时间按时还款，以免影响征信。谢谢！';
+        // });
       } else {
-        Dialog.alert({
-          title: '延期手续费支付失败',
-          message: `该银行卡余额不足`
-        }).then(() => {
-          this.showDelayVisi = false;
-        });
+        // Dialog.alert({
+        //   title: '延期手续费支付失败',
+        //   message: `该银行卡余额不足`
+        // }).then(() => {
+        //   this.showDelayVisi = false;
+        // });
+        this.showSuccess = true;
+        this.sucOPrfail = false;
+        this.msgMess = '该银行卡余额不足';
+        this.icon = 'close';
       }
     }
   },
   mounted () {
-    this.fetchLoanInfo();
+    // this.fetchLoanInfo();
   }
 };
 </script>
@@ -287,88 +339,114 @@ export default {
 <style lang="stylus" scoped>
   section
     min-height 100%
-.order-status-box
-  padding 8px 12px
-  background #fff
-  font-size 14px
-  color #858585
-
-.loan-detail-box
-  padding 25px 15px
-  text-align center
-  .icon-size
-    font-size 40px
-    line-height 1.5
-.order-detail-box
-  text-align center
-  font-size 14px
-  .enlarge
-    font-size 18px
-    line-height 1.5
-    padding 0 2px
-  .obvious
-    font-size 18px
-    line-height 1.5
-    color #f13c38
-    padding 0 2px
-.loan-info-box
-  background #fff
-  margin-bottom 10px
-.bank-box
-  background #fff
-
-.loan-row
-  padding 8px 12px
-  line-height 1.5
-  .title
-    color #999999
-  .value
-    color #333333
-    text-align right
-.loan-padding
-  padding 8px 0
-
-.loan-detail-row
-  margin-bottom 15px
-  .title
-    font-size 12px
-    line-height 25px
-  p
+  .order-status-box
+    padding 8px 12px
+    background #fff
     font-size 14px
-  .number-tag
-    font-size 18px
-    line-height 35px
-.delay-text
-  line-height 3
-  text-decoration underline
-  font-size 12px
-.dialog-left-close
-  position absolute
-  left 7px
-  top 7px
-  color #999
-  font-size 16px
+    color #858585
 
-.aurora-dialog-content
-  padding 15px 12px
-  .obvious-text
+  .loan-detail-box
+    padding 25px 15px
     text-align center
-    font-size 18px
-    line-height 2
-  .text
+    .icon-size
+      font-size 40px
+      line-height 1.5
+  .order-detail-box
+    text-align center
+    font-size 14px
+    .enlarge
+      font-size 18px
+      line-height 1.5
+      padding 0 2px
+    .obvious
+      font-size 18px
+      line-height 1.5
+      color #f13c38
+      padding 0 2px
+  .loan-info-box
+    background #fff
+    margin-bottom 10px
+  .bank-box
+    background #fff
+
+  .loan-row
+    padding 8px 12px
     line-height 1.5
+    .title
+      color #999999
+    .value
+      color #333333
+      text-align right
+  .loan-padding
+    padding 8px 0
+
+  .loan-detail-row
+    margin-bottom 15px
+    .title
+      font-size 12px
+      line-height 25px
+    p
+      font-size 14px
+    .number-tag
+      font-size 18px
+      line-height 35px
+  .delay-text
+    line-height 3
+    text-decoration underline
+    font-size 12px
+  .dialog-left-close
+    position absolute
+    left 7px
+    top 7px
     color #999
+    font-size 24px
+
+  .aurora-dialog-content
+    padding 0   12px 35px 12px
+    .yan-Qi
+      font-size 14px
+      color: deepskyblue
+      text-align center
+      margin-bottom 12px
+    .mar-bottom15
+      font-size 14px
+      padding 0 25px
+    .obvious-text
+      text-align center
+      font-size 18px
+      line-height 2
+      margin-bottom 12px
+    .text
+      line-height 1.5
+      color #999
+
 </style>
 
 <style lang="stylus">
-.dialog-delay-box
-  width 90%
-  top 40%
-  .dialog-header
-    position relative
-    padding 12px
+  .dialog-delay-box
+    width 90%
+    top 45%
+    .dialog-header
+      position relative
+      padding 12px
+      text-align center
+      font-size 16px
+      line-height 26px
+  .aurora-keyboard
+    z-index 9999!important
+  .successP
+    width 80%
+    border-radius 15px
+  & .btn
+    height 40px
+  .successT
+    padding 28px 25px 25px
     text-align center
+    color #999
     font-size 14px
-.aurora-keyboard
-  z-index 2006!important
+    line-height 18px
+  & p.s-p
+    margin 15px
+  & p.s-p-t
+    margin-bottom 20px
 </style>
