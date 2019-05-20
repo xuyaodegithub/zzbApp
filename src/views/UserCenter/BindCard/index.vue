@@ -11,17 +11,21 @@
           <div class="bank-item">
             <div class="bank-info">
               <img class="bank-img" :src="bankItem.logo" alt="" @error="catchErrorImage($event)">
-              <div class="bank-text">
-                <p class="name">{{bankItem.bankName}}</p>
-                <!-- <span class="type">银行储蓄卡</span> -->
-              </div>
+<!--              <div class="bank-text">-->
+<!--                <p class="name">{{bankItem.bankName}}</p>-->
+<!--                &lt;!&ndash; <span class="type">银行储蓄卡</span> &ndash;&gt;-->
+<!--              </div>-->
             </div>
             <div class="bank-num">
-              {{bankItem.cardNo | bankFilter}}
+<!--              {{bankItem.cardNo | bankFilter}}-->
+                  {{bankItem.bankName}}（尾号 {{bankItem.cardNo | bankFilter}}）
             </div>
           </div>
         </div>
       </template>
+      <div class="addBtn">
+        <div class="btnSon" @click="bindNewCard()">+银行卡</div>
+      </div>
     </div>
   </section>
 </template>
@@ -40,9 +44,8 @@ export default {
     return {
       RESULTSUCCESS,
       banklist: [
-        { bankName: '杭州银行', cardNo: 123456789101111111, logo:'' },
-        { bankName: '杭州银行', cardNo: 123456789101111111, logo:'' },
-        { bankName: '杭州银行', cardNo: 123456789101111111, logo:'' },
+        { bankName: '杭州银行', cardNo: '123456789101111156', logo:'' },
+        { bankName: '杭州银行', cardNo: '123456789101111164', logo:'' },
       ]
     };
   },
@@ -61,6 +64,9 @@ export default {
       } else {
         Toast(`${res.resultMessage}`);
       }
+    },
+    bindNewCard () {
+      this.$router.push('/bindcard');
     }
   },
   mounted () {
@@ -83,20 +89,23 @@ export default {
     line-height 2
 
 .bank-item
-  background #f13c38
+  background #ffffff
   border-radius 7px
   box-shadow 0 5px 0 #e6e6e6
-  padding-bottom 20px
+  /*padding-bottom 20px*/
+  padding 30px
   .bank-info
     display flex
     justify-content flex-start
     align-item center
-    padding 12px 20px
+    /*padding 12px 20px*/
   .bank-img
+    display block
     width 45px
     height 45px
     border-radius 50%
-    margin-right 12px
+    /*margin-right 12px*/
+    margin 0 auto
     background #fff
   .bank-text
     color #fff
@@ -107,10 +116,23 @@ export default {
       font-size 12px
       line-height 20px
   .bank-num
-    padding 12px 0
+    padding 20px 0
     text-align center
     color #333333
-    font-size 22px
+    font-size 16px
     background #fff
-
+.addBtn
+    position fixed
+    left 0
+    width 100%
+    bottom 50px
+    font-size 14px
+    color #ffffff
+    text-align center
+    line-height 50px
+  .btnSon
+    width 90%
+    background-color  #1989fa
+    margin 0 auto
+    border-radius 6px
 </style>

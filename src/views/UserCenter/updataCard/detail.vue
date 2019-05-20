@@ -77,9 +77,9 @@ export default {
     return {
       failVisi: false,
       showSuccess:false,
-      icon:'passed',
-      sucOPrfail:true,
-      msgMess:'延期至：2019年10月10号 ，请于延期时间按时还款，以免影响征信。谢谢！',
+      icon: 'passed',
+      sucOPrfail: true,
+      msgMess: '延期至：2019年10月10号 ，请于延期时间按时还款，以免影响征信。谢谢！',
       show: true,
       orderstatusMatch,
       orderInfo: {

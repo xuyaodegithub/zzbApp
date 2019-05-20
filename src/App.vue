@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <transition name="van-slide-left">
-      <router-view/>
+    <transition name="bounce">
+      <router-view  class="child-view"/>
     </transition>
     <Collect/>
     <!--    底部导航-->
@@ -46,5 +46,14 @@ export default {
 <style>
   #app{
     height: 100%;
+  }
+  .bounce-enter-active {
+    transform: translateX(100%);
+  }
+  .bounce-leave-active {
+    transform: translateX(-100%);
+  }
+  .child-view {
+    transition: all .15s linear;
   }
 </style>

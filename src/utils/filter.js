@@ -1,8 +1,11 @@
 // 银行卡号省略号 显示前4位 和后4位
 const bankFilter = (params) => {
-  let reg = /^(.{4})(?:\d+)(.{4})$/;
-  if (!params) return;
-  return (params + '').replace(reg, '$1 **** **** $2');
+  // let reg = /^(.{4})(?:\d+)(.{4})$/;
+  // if (!params) return;
+  // return (params + '').replace(reg, '$1 **** **** $2');
+  let str = params.toString()
+  console.log(str,str.length,str.substring(str.length - 4))
+  return str.substring(str.length - 4);
 };
 
 // 手机号码中间四位数星号表示

@@ -30,7 +30,6 @@
           <van-field
             type="number"
             v-model="personal.mobile"
-            :readonly="true"
             class="auro-input-box"
             maxlength="11">
             <van-button
