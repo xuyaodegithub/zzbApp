@@ -74,15 +74,15 @@ export default {
         message: '确定要解除绑定此银行卡么？'
       }).then(() => {
         // on confirm
-        _self.$router.go(-1)
+        _self.$router.go(-1);
       }).catch(() => {
         // on cancel
       });
     },
     open () {
-      if(this.checked) Toast({duration: 500,message: '设置默认成功'})
-      else Toast({duration: 500,message: '取消默认成功'})
-    },
+      if (this.checked) Toast({duration: 500, message: '设置默认成功'});
+      else Toast({duration: 500, message: '取消默认成功'});
+    }
   },
   mounted () {
     // this.fetchLoanInfo();

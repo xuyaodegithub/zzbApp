@@ -127,9 +127,9 @@
       </header>
       <div class="aurora-dialog-content">
         <p class="obvious-text">333.00</p>
-        <p class="yan-Qi">延期至：2019年10月10号</p>
+<!--        <p class="yan-Qi">延期至：2019年10月10号</p>-->
         <p class="text mar-bottom15">
-          延期还款需先支付延期手续费，需要短信确认，验证码已发送至您手机{{phoneNum | mobileFilter}}
+          延期需要短信确认，验证码已发送至您手机{{phoneNum | mobileFilter}}
         </p>
         <van-password-input
           :value="verifyCode"
@@ -138,7 +138,7 @@
         />
         <button class="aurora-btn-box aurora-btn-gray"
                 :class="{'aurora-btn-active': verifyCode.length === 6 && countdown<=0}"
-                @click="handleDelaySure(0)" :disabled="verifyCode.length<6 || countdown>0">
+                @click="handleDelaySure(1)" :disabled="verifyCode.length<6 || countdown>0">
           {{countdown > 0 ? `${countdown}秒` : '确定'}}
         </button>
       </div>
@@ -161,10 +161,10 @@
       :close-on-click-overlay="false"
     >
       <div class="successT">
-        <van-icon :name="icon" size="46px" color="#07c160"/>
+        <van-icon :name="icon" size="46px" :color="iconColor"/>
         <p class="s-p">延期手续费支付{{sucOPrfail ? '成功' : '失败'}}</p>
         <p class="s-p-t">{{msgMess}}</p>
-        <van-button type="primary" size="small" block class="btn" @click="showSuccess=false">确定</van-button>
+        <van-button :type="btnType" size="small" block class="btn" @click="showSuccess=false">确定</van-button>
       </div>
     </van-popup >
   </section>
@@ -207,6 +207,8 @@ export default {
       // showKeyboard: false,
       // examineVisi: true,
       // countdown: 60
+      iconColor: '#07c160',
+      btnType: 'primary',
       failVisi: false,
       showSuccess: false,
       icon: 'passed',
@@ -314,6 +316,8 @@ export default {
         this.showSuccess = true;
         this.sucOPrfail = true;
         this.icon = 'passed';
+        this.iconColor = '#07c160';
+        this.btnType = 'primary';
         this.msgMess = '延期至：2019年10月10号 ，请于延期时间按时还款，以免影响征信。谢谢！';
         // });
       } else {
@@ -323,6 +327,8 @@ export default {
         // }).then(() => {
         //   this.showDelayVisi = false;
         // });
+        this.iconColor = '#f44';
+        this.btnType = 'danger';
         this.showSuccess = true;
         this.sucOPrfail = false;
         this.msgMess = '该银行卡余额不足';

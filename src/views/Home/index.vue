@@ -115,8 +115,8 @@ export default {
     },
     applyLoan () {
       this.$router.push('/userloaddetail/3');
-      // let canApply = [0, 4].includes(this.loanOrderStatus);
-      // let waitExam = [1, 2].includes(this.loanOrderStatus);
+      // let canApply = [0, 4].includes(this.loanOrderStatus);//可以申请
+      // let waitExam = [1, 2].includes(this.loanOrderStatus);//等待审核
       // if (canApply) {
       //   setStore('productId', this.currentProduct.productId);
       //   if (this.authStatus !== '0') {
@@ -149,7 +149,7 @@ export default {
       if (!item.available) return;
       this.currentProduct = {...item};
       let len = this.checkList && this.checkList.length;
-      let _arr = new Array(len).fill(false);
+      let _arr = new Array(len).fill(false); // 快速创建一个数组，长度是len 每项值false
       _arr[index] = true;
       this.checkList = _arr;
     }

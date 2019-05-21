@@ -90,8 +90,8 @@ const myRouter = new Router({
     },
     {
       path: '/updataCard',
-      component: () => import(/* webpackChunkName: "Seting" */'@/views/UserCenter/updataCard/detail'),
-      name: 'Seting'
+      component: () => import(/* webpackChunkName: "updataCard" */'@/views/UserCenter/updataCard/detail'),
+      name: 'updataCard'
     }
   ]
 });
