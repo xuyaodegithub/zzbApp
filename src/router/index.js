@@ -92,6 +92,11 @@ const myRouter = new Router({
       path: '/updataCard',
       component: () => import(/* webpackChunkName: "updataCard" */'@/views/UserCenter/updataCard/detail'),
       name: 'updataCard'
+    },
+    {
+      path: '/delay',
+      component: () => import(/* webpackChunkName: "delay" */'@/views/UserCenter/Load/delay'),
+      name: 'delay'
     }
   ]
 });

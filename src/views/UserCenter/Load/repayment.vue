@@ -325,7 +325,11 @@ export default {
   font-size 50px
   line-height 50px
 .mar-top-50
-  margin-top 50px
+  /*margin-top 50px*/
+  position fixed
+  bottom 0
+  left 0
+  width 100%
 </style>
 <style lang="stylus">
 .dialog-password

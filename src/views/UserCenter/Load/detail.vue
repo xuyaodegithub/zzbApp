@@ -119,57 +119,57 @@
       </div>
     </van-popup>
     <!-- 立即还款 -->
-    <!-- 立即还款 -->
-    <van-popup
-      :close-on-click-overlay="false"
-      v-model="showDelayVisi"
-      class="dialog-delay-box">
-      <header class="dialog-header">
-        <van-icon name="cross"  class="dialog-left-close" @click="showDelayVisi=false"/>
-        <span class="dialog-head">支付延期手续费</span>
-      </header>
-      <div class="aurora-dialog-content">
-        <p class="obvious-text">333.00</p>
-<!--        <p class="yan-Qi">延期至：2019年10月10号</p>-->
-        <p class="text mar-bottom15">
-          延期需要短信确认，验证码已发送至您手机{{phoneNum | mobileFilter}}
-        </p>
-        <van-password-input
-          :value="verifyCode"
-          :mask="true"
-          @focus="showKeyboard = true"
-        />
-        <button class="aurora-btn-box aurora-btn-gray"
-                :class="{'aurora-btn-active': verifyCode.length === 6 && countdown<=0}"
-                @click="handleDelaySure(1)" :disabled="verifyCode.length<6 || countdown>0">
-          {{countdown > 0 ? `${countdown}秒` : '确定'}}
-        </button>
-      </div>
-    </van-popup>
+    <!--&lt;!&ndash; 立即还款 &ndash;&gt;-->
+    <!--<van-popup-->
+      <!--:close-on-click-overlay="false"-->
+      <!--v-model="showDelayVisi"-->
+      <!--class="dialog-delay-box">-->
+      <!--<header class="dialog-header">-->
+        <!--<van-icon name="cross"  class="dialog-left-close" @click="showDelayVisi=false"/>-->
+        <!--<span class="dialog-head">支付延期手续费</span>-->
+      <!--</header>-->
+      <!--<div class="aurora-dialog-content">-->
+        <!--<p class="obvious-text">333.00</p>-->
+<!--&lt;!&ndash;        <p class="yan-Qi">延期至：2019年10月10号</p>&ndash;&gt;-->
+        <!--<p class="text mar-bottom15">-->
+          <!--延期需要短信确认，验证码已发送至您手机{{phoneNum | mobileFilter}}-->
+        <!--</p>-->
+        <!--<van-password-input-->
+          <!--:value="verifyCode"-->
+          <!--:mask="true"-->
+          <!--@focus="showKeyboard = true"-->
+        <!--/>-->
+        <!--<button class="aurora-btn-box aurora-btn-gray"-->
+                <!--:class="{'aurora-btn-active': verifyCode.length === 6 && countdown<=0}"-->
+                <!--@click="handleDelaySure(1)" :disabled="verifyCode.length<6 || countdown>0">-->
+          <!--{{countdown > 0 ? `${countdown}秒` : '确定'}}-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</van-popup>-->
 
-    <!-- 数字键盘 -->
-    <van-number-keyboard
-      class="aurora-keyboard"
-      :show="showKeyboard"
-      @input="onInput"
-      @delete="onDelete"
-      :zIndex="9999"
-      close-button-text="完成"
-      @blur="showKeyboard = false"
-    />
+    <!--&lt;!&ndash; 数字键盘 &ndash;&gt;-->
+    <!--<van-number-keyboard-->
+      <!--class="aurora-keyboard"-->
+      <!--:show="showKeyboard"-->
+      <!--@input="onInput"-->
+      <!--@delete="onDelete"-->
+      <!--:zIndex="9999"-->
+      <!--close-button-text="完成"-->
+      <!--@blur="showKeyboard = false"-->
+    <!--/>-->
 
-    <van-popup
-      v-model="showSuccess"
-      class="successP"
-      :close-on-click-overlay="false"
-    >
-      <div class="successT">
-        <van-icon :name="icon" size="46px" :color="iconColor"/>
-        <p class="s-p">延期手续费支付{{sucOPrfail ? '成功' : '失败'}}</p>
-        <p class="s-p-t">{{msgMess}}</p>
-        <van-button :type="btnType" size="small" block class="btn" @click="showSuccess=false">确定</van-button>
-      </div>
-    </van-popup >
+    <!--<van-popup-->
+      <!--v-model="showSuccess"-->
+      <!--class="successP"-->
+      <!--:close-on-click-overlay="false"-->
+    <!--&gt;-->
+      <!--<div class="successT">-->
+        <!--<van-icon :name="icon" size="46px" :color="iconColor"/>-->
+        <!--<p class="s-p">延期手续费支付{{sucOPrfail ? '成功' : '失败'}}</p>-->
+        <!--<p class="s-p-t">{{msgMess}}</p>-->
+        <!--<van-button :type="btnType" size="small" block class="btn" @click="showSuccess=false">确定</van-button>-->
+      <!--</div>-->
+    <!--</van-popup >-->
   </section>
 </template>
 
@@ -278,9 +278,10 @@ export default {
       }
     },
     handleDelay () {
-      this.showDelayVisi = true;
+      // this.showDelayVisi = true;
       // 发送短信验证码
-      this.setCountDown();
+      // this.setCountDown();
+      this.$router.push(`/delay?orderNo=${this.orderNo}`)
     },
     // 倒计时
     setCountDown () {
