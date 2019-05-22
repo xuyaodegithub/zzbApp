@@ -177,8 +177,9 @@ export default {
     margin 100px 0 100px
     text-align center
     .logo-img
-      display inline-block
-      // width 60px
+      /*display inline-block*/
+      display: block
+      margin: 0 auto// width 60px
       height 40px
 
   .input-box

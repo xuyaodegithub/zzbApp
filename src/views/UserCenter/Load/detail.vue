@@ -48,9 +48,12 @@
             class="aurora-long-btn aurora-btn-active"
            :to="{name: 'Repayment', params:{orderId: orderInfo.orderNo, paybackAmount: orderInfo.paybackAmount}}">
            立即还款</router-link>
-           <!-- <button v-if="orderInfo.isoverdue"
-            class="aurora-long-btn aurora-btn-active mar-left15"
-            @click="handleDelay">我要延期</button> -->
+<!--           <button v-if="+orderInfo.overdueDay==0"-->
+<!--            class="aurora-long-btn aurora-btn-active mar-left15"-->
+<!--            @click="handleDelay">我要延期</button>-->
+          <div v-if="+orderInfo.overdueDay==0" class="i-to">
+            <span @click="handleDelay">我要延期</span>
+          </div>
         </div>
         <div class="order-detail-box colorwhite" v-else-if="orderInfo.orderStatus === '7' || orderInfo.orderStatus === '8'">
           <i class="Icon-Loan iconontime icon-size"></i>
@@ -224,7 +227,7 @@ export default {
         // deadline:1
 
       },
-      showDelayVisi: true,
+      showDelayVisi: false,
       verifyCode: '',
       showKeyboard: false,
       examineVisi: true,
@@ -337,7 +340,7 @@ export default {
     }
   },
   mounted () {
-    // this.fetchLoanInfo();
+    this.fetchLoanInfo();
   }
 };
 </script>
@@ -455,4 +458,9 @@ export default {
     margin 15px
   & p.s-p-t
     margin-bottom 20px
+  .order-detail-box .i-to
+    font-size 13px
+    color #169BD5
+    text-align center
+    padding-top 10px
 </style>
